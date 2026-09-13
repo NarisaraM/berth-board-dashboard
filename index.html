@@ -201,8 +201,9 @@
   .m-card .gauge{ width:100%; }
   .m-detail{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--border-strong); }
   .m-card .port-grid{ grid-template-columns:1fr; }
-  .m-chevron{ color:var(--ink-faint); font-size:12px; transition:transform .15s ease; }
-  .m-card.open .m-chevron{ transform:rotate(180deg); }
+  .m-chevron{ color:var(--ink-faint); font-size:12px; display:inline-flex; align-items:center; gap:5px; }
+  .m-chevron .arrow{ display:inline-block; transition:transform .15s ease; }
+  .m-card.open .m-chevron .arrow{ transform:rotate(180deg); }
 
   .page-footer{ display:flex; justify-content:flex-end; padding-top:2px; }
   .page-footer a{
@@ -532,7 +533,7 @@ function render(){
         <div><div class="g-label">Booked weight / BSA (t)</div>${gaugeHtml(r.booked_weight_ton, r.bsa_weight_ton, r.pct_weight, r.over_weight)}</div>
       </div>
       <div class="m-top" style="margin:8px 0 0;justify-content:center;">
-        <span class="m-chevron">▾ ${open ? 'hide' : 'show'} port breakdown</span>
+        <span class="m-chevron"><span class="arrow">▾</span> ${open ? 'hide' : 'show'} port breakdown</span>
       </div>
       ${open ? `<div class="m-detail"><div class="dt-title">Booked TEU vs allowance, by POD / transshipment row</div><div class="port-grid">${portCardsHtml(key)}</div></div>` : ''}
     `;

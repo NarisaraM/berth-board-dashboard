@@ -64,7 +64,7 @@
   }
   .hero-art{ position:absolute; left:0; top:6px; width:100%; height:calc(100% - 6px); pointer-events:none; }
   .hero-inner{
-    position:relative; max-width:1240px; margin:0 auto; padding:28px 22px 84px;
+    position:relative; max-width:1240px; margin:0 auto; padding:28px 22px 104px;
     display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
   }
   .title-block{ display:flex; flex-direction:column; min-width:0; }
@@ -85,6 +85,26 @@
   .waves{ position:absolute; left:0; bottom:-1px; width:200%; height:48px; color:var(--bg); animation:drift 42s linear infinite; }
   .waves.back{ bottom:7px; color:#fff; opacity:.16; animation-duration:64s; animation-direction:reverse; }
   @keyframes drift{ to{ transform:translateX(-50%); } }
+  /* ---- Cargo ship sailing back and forth across the hero ---- */
+  .hero-inner{ z-index:1; }
+  .ship{
+    position:absolute; bottom:60px; left:62%; width:132px; z-index:0;
+    animation:sail 52s linear infinite;
+  }
+  .ship svg{ display:block; animation:turn 52s steps(1,end) infinite; }
+  .ship-bob{ transform-origin:50% 90%; animation:bob 3.8s ease-in-out infinite alternate; }
+  @keyframes sail{
+    0%{ left:-170px; } 47%{ left:100%; } 50%{ left:100%; } 97%{ left:-170px; } 100%{ left:-170px; }
+  }
+  @keyframes turn{
+    0%{ transform:scaleX(1); } 48%{ transform:scaleX(-1); } 98%{ transform:scaleX(1); }
+  }
+  @keyframes bob{
+    from{ transform:translateY(1px) rotate(-1.1deg); } to{ transform:translateY(-3px) rotate(1.1deg); }
+  }
+  .waves.mid{ bottom:52px; height:36px; color:#9fc4ec; opacity:.26; animation-duration:50s; }
+  @media (prefers-reduced-motion:reduce){ .ship, .ship svg, .ship-bob{ animation:none; } }
+
   @media (prefers-reduced-motion:reduce){ .waves{ animation:none; } }
 
   .legend-lights{ display:flex; align-items:center; gap:14px; font-size:13.5px; color:var(--ink-dim); margin-left:auto; }
@@ -267,6 +287,7 @@
   }
   @media (max-width:720px){
     .hero h1{ font-size:36px; }
+    .ship{ width:104px; }
     .hero .right-col{ align-items:flex-start; }
     .table-scroll{ display:none; }
     .mobile-cards{ display:flex; }
@@ -306,6 +327,8 @@
     </div>
   </div>
   <svg class="waves back" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 8 180 26 T360 26 Q450 8 540 26 T720 26 Q810 8 900 26 T1080 26 Q1170 8 1260 26 T1440 26 Q1530 8 1620 26 T1800 26 Q1890 8 1980 26 T2160 26 Q2250 8 2340 26 T2520 26 Q2610 8 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
+  <div class="ship" aria-hidden="true"><div class="ship-bob"><svg viewBox="0 0 170 74" width="100%" overflow="visible"><path d="M2 38H156L144 60H16Z" fill="#071a33"/><path d="M9 47H152L146.5 55H13Z" fill="#d3302a"/><path d="M2 38H156" stroke="#9fc4ec" stroke-opacity=".5" stroke-width="1"/><rect x="24.0" y="28" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M25.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.5" y="28" width="13.7" height="9.6" rx=".6" fill="#12865c"/><path d="M40.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="53.0" y="28" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M54.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.5" y="28" width="13.7" height="9.6" rx=".6" fill="#c79a3b"/><path d="M69.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="82.0" y="28" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M83.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="96.5" y="28" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M98.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="111.0" y="28" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M112.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="125.5" y="28" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M127.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="24.0" y="18" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M25.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.5" y="18" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M40.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="53.0" y="18" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M54.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.5" y="18" width="13.7" height="9.6" rx=".6" fill="#12865c"/><path d="M69.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="82.0" y="18" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M83.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="96.5" y="18" width="13.7" height="9.6" rx=".6" fill="#c79a3b"/><path d="M98.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="111.0" y="18" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M112.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.0" y="8" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M39.5 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="52.5" y="8" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M54.0 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.0" y="8" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M68.5 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="81.5" y="8" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M83.0 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="5" y="10" width="15" height="28" fill="#e9f0f8"/><rect x="5" y="15" width="15" height="4" fill="#0b2545"/><rect x="5" y="23" width="15" height="3" fill="#0b2545" fill-opacity=".6"/><rect x="8" y="1" width="8" height="9" fill="#d3302a"/><rect x="8" y="4.5" width="8" height="2.4" fill="#fff"/><path d="M12.5 1V-7" stroke="#e9f0f8" stroke-width="1"/><path d="M0 61q10-5 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/></svg></div></div>
+  <svg class="waves mid" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 8 180 26 T360 26 Q450 8 540 26 T720 26 Q810 8 900 26 T1080 26 Q1170 8 1260 26 T1440 26 Q1530 8 1620 26 T1800 26 Q1890 8 1980 26 T2160 26 Q2250 8 2340 26 T2520 26 Q2610 8 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
   <svg class="waves" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 14 180 26 T360 26 Q450 14 540 26 T720 26 Q810 14 900 26 T1080 26 Q1170 14 1260 26 T1440 26 Q1530 14 1620 26 T1800 26 Q1890 14 1980 26 T2160 26 Q2250 14 2340 26 T2520 26 Q2610 14 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
 </header>
 

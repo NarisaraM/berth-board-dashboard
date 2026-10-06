@@ -64,7 +64,7 @@
   }
   .hero-art{ position:absolute; left:0; top:6px; width:100%; height:calc(100% - 6px); pointer-events:none; }
   .hero-inner{
-    position:relative; max-width:1240px; margin:0 auto; padding:28px 22px 104px;
+    position:relative; max-width:1240px; margin:0 auto; padding:28px 22px 118px;
     display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
   }
   .title-block{ display:flex; flex-direction:column; min-width:0; }
@@ -88,7 +88,7 @@
   /* ---- Cargo ship sailing back and forth across the hero ---- */
   .hero-inner{ z-index:1; }
   .ship{
-    position:absolute; bottom:60px; left:62%; width:132px; z-index:0;
+    position:absolute; bottom:70px; left:62%; width:168px; z-index:0;
     animation:sail 52s linear infinite;
   }
   .ship svg{ display:block; animation:turn 52s steps(1,end) infinite; }
@@ -287,7 +287,7 @@
   }
   @media (max-width:720px){
     .hero h1{ font-size:36px; }
-    .ship{ width:104px; }
+    .ship{ width:120px; }
     .hero .right-col{ align-items:flex-start; }
     .table-scroll{ display:none; }
     .mobile-cards{ display:flex; }

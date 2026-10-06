@@ -51,61 +51,70 @@
 
   .wrap{ max-width:1240px; margin:0 auto; padding:0 22px 60px; display:flex; flex-direction:column; gap:18px; }
 
-  /* ---- Hero (harbour-at-dusk header) ---- */
+  /* ---- Hero: loading cargo onto the ship ---- */
   .hero{
-    position:relative; overflow:hidden; color:#fff;
-    background:
-      radial-gradient(900px 360px at 84% -30%, #2f86d655, transparent 60%),
-      linear-gradient(135deg,#0b2545 0%,#0e3563 55%,#13508f 100%);
+    position:relative; overflow:hidden; color:var(--navy);
+    min-height:clamp(350px, calc(18.75vw + 82px), 500px);
+    background:linear-gradient(180deg,#bfe5fb 0%,#d8f0fe 45%,#eaf7ff 75%);
   }
   .flag-strip{
-    height:6px;
+    position:relative; z-index:2; height:6px;
     background:repeating-linear-gradient(90deg,#d3302a 0 48px,#fff 48px 96px,#c79a3b 96px 144px,#fff 144px 192px,#12865c 192px 240px,#fff 240px 288px);
   }
-  .hero-art{ position:absolute; left:0; top:6px; width:100%; height:calc(100% - 6px); pointer-events:none; }
+  .scene{ position:absolute; left:0; bottom:0; width:100%; height:clamp(200px,18.75vw,420px); pointer-events:none; }
   .hero-inner{
-    position:relative; max-width:1240px; margin:0 auto; padding:28px 22px 118px;
+    position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:26px 22px 0;
     display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
   }
   .title-block{ display:flex; flex-direction:column; min-width:0; }
   .kicker{
     display:flex; align-items:center; gap:8px; margin-bottom:8px;
-    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#9fc4ec;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
   }
-  .kicker svg{ width:16px; height:16px; stroke:var(--brass); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-  .hero h1{ font-weight:800; font-size:52px; line-height:.98; letter-spacing:.02em; color:#fff; }
-  .hero .sub{ color:#bcd3ea; font-size:15px; margin-top:12px; max-width:62ch; }
-  .hero .sub b{ color:#fff; font-weight:600; }
+  .kicker svg{ width:16px; height:16px; stroke:var(--accent); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .hero h1{ font-weight:800; font-size:52px; line-height:.98; letter-spacing:.02em; color:var(--navy); }
+  .hero .sub{ color:#35546f; font-size:15px; margin-top:12px; max-width:62ch; }
+  .hero .sub b{ color:var(--navy); font-weight:600; }
   .hero .right-col{ display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
-  .logo-plate{ background:#fff; border-radius:12px; padding:7px 14px; box-shadow:0 10px 26px -10px rgba(0,0,0,.55); }
+  .logo-plate{ background:#fff; border-radius:12px; padding:7px 14px; box-shadow:0 10px 24px -12px rgba(11,37,69,.45); }
   .brand-logo{ height:46px; width:auto; display:block; }
   .clock{ display:flex; align-items:baseline; gap:8px; font-family:"IBM Plex Mono",monospace; }
-  .clock .time{ font-size:19px; font-weight:600; color:#fff; letter-spacing:.03em; }
-  .clock .date{ font-size:11.5px; color:#9fc4ec; }
-  .waves{ position:absolute; left:0; bottom:-1px; width:200%; height:48px; color:var(--bg); animation:drift 42s linear infinite; }
-  .waves.back{ bottom:7px; color:#fff; opacity:.16; animation-duration:64s; animation-direction:reverse; }
+  .clock .time{ font-size:19px; font-weight:600; color:var(--navy); letter-spacing:.03em; }
+  .clock .date{ font-size:11.5px; color:#4c6a85; }
+  .waves{ position:absolute; left:0; bottom:-1px; width:200%; height:40px; color:var(--bg); z-index:1; animation:drift 42s linear infinite; }
   @keyframes drift{ to{ transform:translateX(-50%); } }
-  /* ---- Cargo ship sailing back and forth across the hero ---- */
-  .hero-inner{ z-index:1; }
-  .ship{
-    position:absolute; bottom:70px; left:62%; width:168px; z-index:0;
-    animation:sail 52s linear infinite;
-  }
-  .ship svg{ display:block; animation:turn 52s steps(1,end) infinite; }
-  .ship-bob{ transform-origin:50% 90%; animation:bob 3.8s ease-in-out infinite alternate; }
-  @keyframes sail{
-    0%{ left:-170px; } 47%{ left:100%; } 50%{ left:100%; } 97%{ left:-170px; } 100%{ left:-170px; }
-  }
-  @keyframes turn{
-    0%{ transform:scaleX(1); } 48%{ transform:scaleX(-1); } 98%{ transform:scaleX(1); }
-  }
-  @keyframes bob{
-    from{ transform:translateY(1px) rotate(-1.1deg); } to{ transform:translateY(-3px) rotate(1.1deg); }
-  }
-  .waves.mid{ bottom:52px; height:36px; color:#9fc4ec; opacity:.26; animation-duration:50s; }
-  @media (prefers-reduced-motion:reduce){ .ship, .ship svg, .ship-bob{ animation:none; } }
 
-  @media (prefers-reduced-motion:reduce){ .waves{ animation:none; } }
+  /* scene animation: crane lifts a box from the quay and lowers it onto the ship (14s loop) */
+  .scene .trolley, .scene .hoist, .scene .rope, .scene .quay-box, .scene .carried, .scene .placed,
+  .scene .sea, .scene .cloud, .scene .bird, .scene .sun{ transform-box:fill-box; }
+  .scene .trolley{ animation:trolley 14s ease-in-out infinite; }
+  .scene .hoist{ animation:hoist 14s ease-in-out infinite; }
+  .scene .rope{ transform-origin:50% 0; animation:rope 14s ease-in-out infinite; }
+  .scene .quay-box{ animation:quaybox 14s linear infinite; }
+  .scene .carried{ opacity:0; animation:carried 14s linear infinite; }
+  .scene .placed{ opacity:0; animation:placed 14s linear infinite; }
+  @keyframes trolley{ 0%,20%{ transform:translateX(282px); } 46%,66%{ transform:translateX(0); } 92%,100%{ transform:translateX(282px); } }
+  @keyframes hoist{ 0%{ transform:translateY(0); } 8%,12%{ transform:translateY(53px); } 20%,46%{ transform:translateY(0); } 54%,58%{ transform:translateY(65px); } 66%,100%{ transform:translateY(0); } }
+  @keyframes rope{ 0%{ transform:scaleY(1); } 8%,12%{ transform:scaleY(3.208); } 20%,46%{ transform:scaleY(1); } 54%,58%{ transform:scaleY(3.708); } 66%,100%{ transform:scaleY(1); } }
+  @keyframes quaybox{ 0%,11.9%{ opacity:1; } 12%,94%{ opacity:0; } 96%,100%{ opacity:1; } }
+  @keyframes carried{ 0%,11.9%{ opacity:0; } 12%,57.9%{ opacity:1; } 58%,100%{ opacity:0; } }
+  @keyframes placed{ 0%,57.9%{ opacity:0; } 58%,90%{ opacity:1; } 96%,100%{ opacity:0; } }
+  .scene .s1{ animation:seaL 18s linear infinite; }
+  .scene .s2{ animation:seaR 13s linear infinite; }
+  @keyframes seaL{ to{ transform:translateX(-1600px); } }
+  @keyframes seaR{ from{ transform:translateX(-1600px); } to{ transform:translateX(0); } }
+  .scene .cloud.c1{ animation:cloud 60s ease-in-out infinite alternate; }
+  .scene .cloud.c2{ animation:cloud 75s ease-in-out infinite alternate-reverse; }
+  .scene .cloud.c3{ animation:cloud 90s ease-in-out infinite alternate; }
+  @keyframes cloud{ to{ transform:translateX(70px); } }
+  .scene .bird.b1{ animation:bird 7s ease-in-out infinite alternate; }
+  .scene .bird.b2{ animation:bird 9s ease-in-out infinite alternate-reverse; }
+  @keyframes bird{ to{ transform:translate(26px,-8px); } }
+  @media (prefers-reduced-motion:reduce){
+    .waves, .scene *{ animation:none !important; }
+    .scene .placed{ opacity:1 !important; } .scene .quay-box{ opacity:1 !important; }
+  }
+
 
   .legend-lights{ display:flex; align-items:center; gap:14px; font-size:13.5px; color:var(--ink-dim); margin-left:auto; }
   .legend-lights span{ display:inline-flex; align-items:center; gap:6px; }
@@ -311,7 +320,7 @@
   }
   @media (max-width:720px){
     .hero h1{ font-size:36px; }
-    .ship{ width:120px; }
+    .hero{ min-height:430px; }
     .hero .right-col{ align-items:flex-start; }
     .table-scroll{ display:none; }
     .mobile-cards{ display:flex; }
@@ -322,19 +331,81 @@
 <body>
 <header class="hero">
   <div class="flag-strip"></div>
-  <svg class="hero-art" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <g stroke="#fff" stroke-opacity=".06" stroke-width="1">
-      <path d="M0 60H1440M0 120H1440M0 180H1440M0 240H1440"/>
-      <path d="M180 0V300M360 0V300M540 0V300M720 0V300M900 0V300M1080 0V300M1260 0V300"/>
+  <svg class="scene" viewBox="0 0 1600 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <radialGradient id="sunGlow"><stop offset="0" stop-color="#fff3b0" stop-opacity=".9"/><stop offset="1" stop-color="#fff3b0" stop-opacity="0"/></radialGradient>
+      <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68bdf0"/><stop offset=".45" stop-color="#3f9de0"/><stop offset="1" stop-color="#1f7ec4"/></linearGradient>
+      <linearGradient id="quayG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4dbe2"/><stop offset="1" stop-color="#bcc6d0"/></linearGradient>
+    </defs>
+
+    <!-- sky -->
+    <g class="sun"><circle cx="930" cy="46" r="70" fill="url(#sunGlow)"/><circle cx="930" cy="46" r="30" fill="#ffd23f"/><circle cx="930" cy="46" r="21" fill="#ffe27a"/></g>
+    <g class="cloud c1" fill="#fff"><ellipse cx="190" cy="72" rx="58" ry="14"/><ellipse cx="226" cy="60" rx="30" ry="15"/><ellipse cx="160" cy="62" rx="22" ry="11"/></g>
+    <g class="cloud c2" fill="#fff" opacity=".9"><ellipse cx="1130" cy="34" rx="46" ry="11"/><ellipse cx="1160" cy="25" rx="24" ry="12"/></g>
+    <g class="cloud c3" fill="#fff" opacity=".85"><ellipse cx="640" cy="110" rx="44" ry="10"/><ellipse cx="664" cy="102" rx="22" ry="10"/></g>
+    <g class="bird b1" fill="none" stroke="#2d4a63" stroke-width="1.8" stroke-linecap="round"><path d="M700 64q7-8 14 0q7-8 14 0"/></g>
+    <g class="bird b2" fill="none" stroke="#2d4a63" stroke-width="1.6" stroke-linecap="round"><path d="M744 48q6-7 12 0q6-7 12 0"/></g>
+
+    <!-- blue background crane -->
+    <g fill="#2a6fc9">
+      <rect x="1488" y="92" width="8" height="86"/><rect x="1546" y="92" width="8" height="86"/>
+      <rect x="1180" y="90" width="420" height="8"/><rect x="1508" y="54" width="8" height="38"/>
     </g>
-    <path d="M-20 232 C 260 120, 520 276, 800 156 S 1250 70, 1480 150" fill="none" stroke="#9fc4ec" stroke-opacity=".5" stroke-width="1.6" stroke-dasharray="7 9"/>
-    <g fill="#c79a3b"><circle cx="262" cy="164" r="4.5"/><circle cx="548" cy="214" r="4.5"/><circle cx="812" cy="152" r="4.5"/><circle cx="1130" cy="104" r="4.5"/></g>
-    <g transform="translate(1290 112)" fill="none" stroke="#fff" stroke-opacity=".32">
-      <circle r="50"/><circle r="36" stroke-dasharray="2 5"/>
-      <path d="M0 -58L9 0L0 58L-9 0Z" fill="#fff" fill-opacity=".14"/>
-      <path d="M-58 0L0 -9L58 0L0 9Z" fill="#fff" fill-opacity=".08"/>
-      <text y="-64" text-anchor="middle" fill="#9fc4ec" fill-opacity=".8" stroke="none" font-size="12" font-family="IBM Plex Mono, monospace">N</text>
+    <g stroke="#2a6fc9" stroke-width="2.4"><path d="M1492 124L1550 178M1550 124L1492 178M1492 98H1550"/></g>
+    <g stroke="#3a516b" stroke-width="1.1"><path d="M1512 56L1180 92M1512 56L1596 92"/></g>
+
+    <!-- sea (behind ship) -->
+    <rect x="0" y="205" width="1600" height="95" fill="url(#seaG)"/>
+    <g class="sea s1"><path d="M0 212 q50 -9 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 V300 H0Z" fill="#8fd0f5" opacity=".5"/></g>
+
+    <!-- quay -->
+    <rect x="1010" y="178" width="590" height="4" fill="#f7c326"/>
+    <rect x="1010" y="182" width="590" height="16" fill="#b5bfca"/>
+    <rect x="1010" y="198" width="590" height="102" fill="url(#quayG)"/>
+    <g fill="#37485a"><rect x="1030" y="172" width="10" height="6" rx="2"/><rect x="1240" y="172" width="10" height="6" rx="2"/></g>
+    <rect x="1270.0" y="158.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M1278.0 160.0v16.0M1287.5 160.0v16.0M1297.0 160.0v16.0M1306.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1270.0" y="138.0" width="44" height="20" rx="1" fill="#f2b705"/><path d="M1278.0 140.0v16.0M1287.5 140.0v16.0M1297.0 140.0v16.0M1306.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1270.0" y="118.0" width="44" height="20" rx="1" fill="#3aa7c9"/><path d="M1278.0 120.0v16.0M1287.5 120.0v16.0M1297.0 120.0v16.0M1306.5 120.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1316.0" y="158.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M1324.0 160.0v16.0M1333.5 160.0v16.0M1343.0 160.0v16.0M1352.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1316.0" y="138.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M1324.0 140.0v16.0M1333.5 140.0v16.0M1343.0 140.0v16.0M1352.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1362.0" y="158.0" width="44" height="20" rx="1" fill="#2aa198"/><path d="M1370.0 160.0v16.0M1379.5 160.0v16.0M1389.0 160.0v16.0M1398.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1362.0" y="138.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M1370.0 140.0v16.0M1379.5 140.0v16.0M1389.0 140.0v16.0M1398.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1362.0" y="118.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M1370.0 120.0v16.0M1379.5 120.0v16.0M1389.0 120.0v16.0M1398.5 120.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1408.0" y="158.0" width="44" height="20" rx="1" fill="#d63b3b"/><path d="M1416.0 160.0v16.0M1425.5 160.0v16.0M1435.0 160.0v16.0M1444.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1408.0" y="138.0" width="44" height="20" rx="1" fill="#2aa198"/><path d="M1416.0 140.0v16.0M1425.5 140.0v16.0M1435.0 140.0v16.0M1444.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1408.0" y="118.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M1416.0 120.0v16.0M1425.5 120.0v16.0M1435.0 120.0v16.0M1444.5 120.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1454.0" y="158.0" width="44" height="20" rx="1" fill="#7a4ec2"/><path d="M1462.0 160.0v16.0M1471.5 160.0v16.0M1481.0 160.0v16.0M1490.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1454.0" y="138.0" width="44" height="20" rx="1" fill="#d63b3b"/><path d="M1462.0 140.0v16.0M1471.5 140.0v16.0M1481.0 140.0v16.0M1490.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1500.0" y="158.0" width="44" height="20" rx="1" fill="#e8742a"/><path d="M1508.0 160.0v16.0M1517.5 160.0v16.0M1527.0 160.0v16.0M1536.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1500.0" y="138.0" width="44" height="20" rx="1" fill="#7a4ec2"/><path d="M1508.0 140.0v16.0M1517.5 140.0v16.0M1527.0 140.0v16.0M1536.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1500.0" y="118.0" width="44" height="20" rx="1" fill="#d63b3b"/><path d="M1508.0 120.0v16.0M1517.5 120.0v16.0M1527.0 120.0v16.0M1536.5 120.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1546.0" y="158.0" width="44" height="20" rx="1" fill="#3aa7c9"/><path d="M1554.0 160.0v16.0M1563.5 160.0v16.0M1573.0 160.0v16.0M1582.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1546.0" y="138.0" width="44" height="20" rx="1" fill="#e8742a"/><path d="M1554.0 140.0v16.0M1563.5 140.0v16.0M1573.0 140.0v16.0M1582.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1108.0" y="158.0" width="44" height="20" rx="1" fill="#f2b705"/><path d="M1116.0 160.0v16.0M1125.5 160.0v16.0M1135.0 160.0v16.0M1144.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="1108.0" y="138.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M1116.0 140.0v16.0M1125.5 140.0v16.0M1135.0 140.0v16.0M1144.5 140.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/>
+
+    <!-- ship (bow left, bridge right) -->
+    <g class="ship-group">
+      <path d="M612 190H1004V214H664Z" fill="#17304f"/>
+      <path d="M624 203H1004V214H664Z" fill="#c93a3a"/>
+      <text x="720" y="199.5" fill="#fff" font-size="8.5" letter-spacing="2.6" font-family="IBM Plex Mono, monospace" font-weight="600">HEUNG A LINE</text>
+      <rect x="640.0" y="170.0" width="44" height="20" rx="1" fill="#d63b3b"/><path d="M648.0 172.0v16.0M657.5 172.0v16.0M667.0 172.0v16.0M676.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="640.0" y="150.0" width="44" height="20" rx="1" fill="#e8742a"/><path d="M648.0 152.0v16.0M657.5 152.0v16.0M667.0 152.0v16.0M676.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="640.0" y="130.0" width="44" height="20" rx="1" fill="#f2b705"/><path d="M648.0 132.0v16.0M657.5 132.0v16.0M667.0 132.0v16.0M676.5 132.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="686.0" y="170.0" width="44" height="20" rx="1" fill="#2aa198"/><path d="M694.0 172.0v16.0M703.5 172.0v16.0M713.0 172.0v16.0M722.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="686.0" y="150.0" width="44" height="20" rx="1" fill="#7a4ec2"/><path d="M694.0 152.0v16.0M703.5 152.0v16.0M713.0 152.0v16.0M722.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="686.0" y="130.0" width="44" height="20" rx="1" fill="#3aa7c9"/><path d="M694.0 132.0v16.0M703.5 132.0v16.0M713.0 132.0v16.0M722.5 132.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="732.0" y="170.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M740.0 172.0v16.0M749.5 172.0v16.0M759.0 172.0v16.0M768.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="732.0" y="150.0" width="44" height="20" rx="1" fill="#d63b3b"/><path d="M740.0 152.0v16.0M749.5 152.0v16.0M759.0 152.0v16.0M768.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="824.0" y="170.0" width="44" height="20" rx="1" fill="#f2b705"/><path d="M832.0 172.0v16.0M841.5 172.0v16.0M851.0 172.0v16.0M860.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="824.0" y="150.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M832.0 152.0v16.0M841.5 152.0v16.0M851.0 152.0v16.0M860.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="870.0" y="170.0" width="44" height="20" rx="1" fill="#3aa7c9"/><path d="M878.0 172.0v16.0M887.5 172.0v16.0M897.0 172.0v16.0M906.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="870.0" y="150.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M878.0 152.0v16.0M887.5 152.0v16.0M897.0 152.0v16.0M906.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="870.0" y="130.0" width="44" height="20" rx="1" fill="#2aa198"/><path d="M878.0 132.0v16.0M887.5 132.0v16.0M897.0 132.0v16.0M906.5 132.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="916.0" y="170.0" width="44" height="20" rx="1" fill="#e8742a"/><path d="M924.0 172.0v16.0M933.5 172.0v16.0M943.0 172.0v16.0M952.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="916.0" y="150.0" width="44" height="20" rx="1" fill="#f2b705"/><path d="M924.0 152.0v16.0M933.5 152.0v16.0M943.0 152.0v16.0M952.5 152.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/><rect x="916.0" y="130.0" width="44" height="20" rx="1" fill="#1f9d6f"/><path d="M924.0 132.0v16.0M933.5 132.0v16.0M943.0 132.0v16.0M952.5 132.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/>
+      <rect x="962" y="140" width="40" height="50" fill="#f3f6f9"/>
+      <rect x="958" y="130" width="48" height="10" fill="#e1e8ef"/>
+      <path d="M970 150h24M970 160h24M970 170h24" stroke="#2b3a4b" stroke-width="3.2"/>
+      <rect x="978" y="114" width="14" height="16" fill="#c93a3a"/><rect x="978" y="119" width="14" height="3.5" fill="#fff"/>
+      <path d="M985 114V104" stroke="#2b3a4b" stroke-width="1.4"/>
+      <!-- container the crane delivers -->
+      <g class="placed"><rect x="778.0" y="170.0" width="44" height="20" rx="1" fill="#e8742a"/><path d="M786.0 172.0v16.0M795.5 172.0v16.0M805.0 172.0v16.0M814.5 172.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/></g>
     </g>
+
+    <!-- orange crane -->
+    <g fill="#ee6c2b">
+      <rect x="1158" y="68" width="9" height="110"/><rect x="1228" y="68" width="9" height="110"/>
+      <rect x="1158" y="118" width="79" height="7"/><rect x="1150" y="64" width="95" height="10"/>
+      <rect x="1194" y="22" width="9" height="46"/>
+      <rect x="760" y="66" width="574" height="8"/><rect x="1282" y="50" width="42" height="16" fill="#d95a1c"/>
+    </g>
+    <g stroke="#ee6c2b" stroke-width="2.6"><path d="M1163 125L1232 178M1232 125L1163 178"/></g>
+    <g stroke="#3a516b" stroke-width="1.2"><path d="M1198 24L760 68M1198 24L1334 68"/></g>
+
+    <!-- container waiting on the quay + trolley / hoist that moves it to the ship -->
+    <g class="quay-box"><rect x="1060.0" y="158.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M1068.0 160.0v16.0M1077.5 160.0v16.0M1087.0 160.0v16.0M1096.5 160.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/></g>
+    <g transform="translate(800 0)">
+      <g class="trolley">
+        <rect x="-17" y="60" width="34" height="16" rx="2" fill="#2b3a4b"/>
+        <circle cx="-9" cy="77" r="2.6" fill="#8a97a6"/><circle cx="9" cy="77" r="2.6" fill="#8a97a6"/>
+        <g class="rope" stroke="#2b3a4b" stroke-width="1.4"><path d="M-9 77V100M9 77V100"/></g>
+        <g class="hoist">
+          <rect x="-26" y="100" width="52" height="5" rx="1" fill="#2b3a4b"/>
+          <g class="carried"><rect x="-22.0" y="105.0" width="44" height="20" rx="1" fill="#2b6fc4"/><path d="M-14.0 107.0v16.0M-4.5 107.0v16.0M5.0 107.0v16.0M14.5 107.0v16.0" stroke="#000" stroke-opacity=".14" stroke-width="1.2"/></g>
+        </g>
+      </g>
+    </g>
+
+    <!-- foreground sea over the hull -->
+    <g class="sea s2"><path d="M0 236 q50 -7 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 V300 H0Z" fill="#1f7ec4" opacity=".75"/></g>
   </svg>
   <div class="hero-inner">
     <div class="title-block">
@@ -350,10 +421,7 @@
       </div>
     </div>
   </div>
-  <svg class="waves back" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 8 180 26 T360 26 Q450 8 540 26 T720 26 Q810 8 900 26 T1080 26 Q1170 8 1260 26 T1440 26 Q1530 8 1620 26 T1800 26 Q1890 8 1980 26 T2160 26 Q2250 8 2340 26 T2520 26 Q2610 8 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
-  <div class="ship" aria-hidden="true"><div class="ship-bob"><svg viewBox="0 0 170 74" width="100%" overflow="visible"><path d="M2 38H156L144 60H16Z" fill="#071a33"/><path d="M9 47H152L146.5 55H13Z" fill="#d3302a"/><path d="M2 38H156" stroke="#9fc4ec" stroke-opacity=".5" stroke-width="1"/><rect x="24.0" y="28" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M25.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.5" y="28" width="13.7" height="9.6" rx=".6" fill="#12865c"/><path d="M40.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="53.0" y="28" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M54.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.5" y="28" width="13.7" height="9.6" rx=".6" fill="#c79a3b"/><path d="M69.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="82.0" y="28" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M83.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="96.5" y="28" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M98.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="111.0" y="28" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M112.5 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="125.5" y="28" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M127.0 31.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="24.0" y="18" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M25.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.5" y="18" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M40.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="53.0" y="18" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M54.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.5" y="18" width="13.7" height="9.6" rx=".6" fill="#12865c"/><path d="M69.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="82.0" y="18" width="13.7" height="9.6" rx=".6" fill="#d3302a"/><path d="M83.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="96.5" y="18" width="13.7" height="9.6" rx=".6" fill="#c79a3b"/><path d="M98.0 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="111.0" y="18" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M112.5 21.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="38.0" y="8" width="13.7" height="9.6" rx=".6" fill="#2f86d6"/><path d="M39.5 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="52.5" y="8" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M54.0 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="67.0" y="8" width="13.7" height="9.6" rx=".6" fill="#f1f5fa"/><path d="M68.5 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="81.5" y="8" width="13.7" height="9.6" rx=".6" fill="#e8803a"/><path d="M83.0 11.0h10.7" stroke="#000" stroke-opacity=".18" stroke-width=".8"/><rect x="5" y="10" width="15" height="28" fill="#e9f0f8"/><rect x="5" y="15" width="15" height="4" fill="#0b2545"/><rect x="5" y="23" width="15" height="3" fill="#0b2545" fill-opacity=".6"/><rect x="8" y="1" width="8" height="9" fill="#d3302a"/><rect x="8" y="4.5" width="8" height="2.4" fill="#fff"/><path d="M12.5 1V-7" stroke="#e9f0f8" stroke-width="1"/><path d="M0 61q10-5 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/></svg></div></div>
-  <svg class="waves mid" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 8 180 26 T360 26 Q450 8 540 26 T720 26 Q810 8 900 26 T1080 26 Q1170 8 1260 26 T1440 26 Q1530 8 1620 26 T1800 26 Q1890 8 1980 26 T2160 26 Q2250 8 2340 26 T2520 26 Q2610 8 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
-  <svg class="waves" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 26 Q90 14 180 26 T360 26 Q450 14 540 26 T720 26 Q810 14 900 26 T1080 26 Q1170 14 1260 26 T1440 26 Q1530 14 1620 26 T1800 26 Q1890 14 1980 26 T2160 26 Q2250 14 2340 26 T2520 26 Q2610 14 2700 26 T2880 26 L2880 60 L0 60 Z"/></svg>
+  <svg class="waves" viewBox="0 0 2880 60" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 30 q90 -12 180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 V60 H0Z"/></svg>
 </header>
 
 <div class="wrap">
@@ -407,20 +475,6 @@
         <div class="lbl">Avg weight utilization</div>
         <div class="foot">mean of booked &divide; BSA G.W.</div>
       </div>
-    </div>
-  </div>
-
-  <div class="chart-row">
-    <div class="panel">
-      <h3>Fleet status</h3>
-      <div class="donut-wrap">
-        <svg id="donut" width="96" height="96" viewBox="0 0 96 96"></svg>
-        <div class="donut-legend" id="donut-legend"></div>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>Avg TEU utilization by service &middot; dashed line = 100% of BSA</h3>
-      <div id="svc-bars"></div>
     </div>
   </div>
 
@@ -507,62 +561,6 @@ document.getElementById('kpi-wgt').textContent = avgWgt.toFixed(0) + '%';
   }
   tick();
   setInterval(tick, 1000);
-})();
-
-// ---------- Donut ----------
-(function(){
-  const okN = records.length - overCount;
-  const total = records.length || 1;
-  const r = 36, cx = 48, cy = 48, circ = 2*Math.PI*r;
-  const okLen = circ * (okN/total);
-  const svg = document.getElementById('donut');
-  svg.innerHTML = `
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--bad)" stroke-width="13"/>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--good)" stroke-width="13"
-      stroke-dasharray="${okLen} ${circ-okLen}" transform="rotate(-90 ${cx} ${cy})"/>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#fff" stroke-width="13"
-      stroke-dasharray="4.5 ${circ/4-4.5}" stroke-dashoffset="2.25"/>
-    <text x="${cx}" y="${cy-2}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="19" font-weight="700" fill="var(--ink)">${okN}</text>
-    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="var(--ink-dim)">of ${total} OK</text>
-  `;
-  document.getElementById('donut-legend').innerHTML = `
-    <div class="row"><span class="dot good" style="width:9px;height:9px;"></span>Within BSA<span class="count num">${okN}</span></div>
-    <div class="row"><span class="dot bad" style="width:9px;height:9px;"></span>Over BSA<span class="count num">${overCount}</span></div>
-  `;
-})();
-
-// ---------- Service bars ----------
-(function(){
-  const bySvc = {};
-  records.forEach(r => {
-    if (r.service === '?' || !r.bsa_teu) return;
-    (bySvc[r.service] = bySvc[r.service] || []).push(r);
-  });
-  const rows = Object.entries(bySvc).map(([svc, rs]) => {
-    const avg = rs.reduce((s,x)=>s+x.pct_teu,0)/rs.length;
-    const overN = rs.filter(x=>x.status==='OVER').length;
-    return {svc, avg, n: rs.length, overN};
-  }).sort((a,b)=>b.avg-a.avg);
-
-  const maxScale = Math.max(120, ...rows.map(r=>r.avg+20));
-  const tickPos = (100/maxScale*100).toFixed(2);
-  const container = document.getElementById('svc-bars');
-  rows.forEach(r => {
-    const fillPct = Math.min(r.avg, maxScale) / maxScale * 100;
-    const isOver = r.avg > 100;
-    const metaText = r.overN > 0 ? `${r.overN}/${r.n} over` : `${r.n} sailing${r.n>1?'s':''}`;
-    const div = document.createElement('div');
-    div.className = 'svc-bar-row';
-    div.innerHTML = `
-      <span class="code">${r.svc}</span>
-      <span class="svc-track">
-        <span class="svc-fill" style="width:${fillPct}%; background:${isOver ? 'var(--bad)' : 'linear-gradient(90deg,#0b2545,#1f6fb8)'};"></span>
-        <span class="svc-tick" style="left:${tickPos}%;"></span>
-      </span>
-      <span class="pct-wrap"><span class="pct">${r.avg.toFixed(0)}%</span><span class="meta${r.overN>0?' has-over':''}">${metaText}</span></span>
-    `;
-    container.appendChild(div);
-  });
 })();
 
 // ---------- Table ----------
